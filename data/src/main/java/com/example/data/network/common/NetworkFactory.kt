@@ -1,6 +1,8 @@
 package com.example.data.network.common
 
+import com.example.data.BuildConfig
 import com.example.data.network.api.ApiRequests
+import com.localebro.okhttpprofiler.OkHttpProfilerInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -30,6 +32,9 @@ object NetworkFactory {
             .connectTimeout(NetworkConstants.TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)
             .writeTimeout(NetworkConstants.TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)
             .readTimeout(NetworkConstants.TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)
+
+        if(BuildConfig.DEBUG)
+            okHttpClient.addInterceptor(OkHttpProfilerInterceptor())
 
         return okHttpClient.build()
     }
